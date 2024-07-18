@@ -12,7 +12,7 @@ export const getBarChartData = async (req, res) => {
     });
   }
 
-  // Map month name to its numerical representation (assuming English month names)
+  // Map month name to its numerical representation
   const monthNumber = getMonthNumber(month);
 
   // Define price ranges
@@ -62,5 +62,3 @@ export const getBarChartData = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
-
-// Utility function to validate month format (optional, adjust as per your needs)

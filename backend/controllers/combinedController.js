@@ -1,5 +1,5 @@
 import axios from "axios";
-import Product from "../models/product.js"; // Adjust the path as per your folder structure
+import Product from "../models/product.js";
 
 // Controller function to fetch data from external API and save in Product model
 export const saveProductsFromExternalAPI = async (req, res) => {
@@ -8,7 +8,7 @@ export const saveProductsFromExternalAPI = async (req, res) => {
     const response = await axios.get(
       "https://s3.amazonaws.com/roxiler.com/product_transaction.json"
     );
-    const products = response.data; // Assuming response.data is an array of products
+    const products = response.data;
 
     // Save products into Product model
     const savedProducts = await Product.insertMany(products);

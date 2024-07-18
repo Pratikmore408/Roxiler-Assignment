@@ -3,7 +3,7 @@ import { saveProductsFromExternalAPI } from "../controllers/combinedController.j
 
 const router = express.Router();
 
-// Route to combine responses from multiple APIs
+// Route to get combined product
 router.get("/combined", saveProductsFromExternalAPI);
 
 export default router;

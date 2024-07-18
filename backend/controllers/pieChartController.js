@@ -12,11 +12,11 @@ export const getPieChartData = async (req, res) => {
     });
   }
 
-  // Map month name to its numerical representation (assuming English month names)
+  // Map month name to its numerical representation
   const monthNumber = getMonthNumber(month);
 
   try {
-    // Get pie chart data for the specified month, regardless of year
+    // Get pie chart data for the specified month
     const pieChartData = await Product.aggregate([
       {
         $addFields: {

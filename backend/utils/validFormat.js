@@ -1,5 +1,4 @@
 export const isValidMonthFormat = (month) => {
-  // Example validation logic (modify as per your month input format)
   const validMonths = [
     "january",
     "february",

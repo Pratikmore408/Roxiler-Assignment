@@ -7,9 +7,6 @@ const TransactionsStats = ({ selectedMonth }) => {
     totalSoldItems: 0,
     totalNotSoldItems: 0,
   });
-  const [searchTerm, setSearchTerm] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(10);
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -24,24 +21,6 @@ const TransactionsStats = ({ selectedMonth }) => {
     fetchStats();
   }, [selectedMonth]);
 
-  const handleSearchChange = (event) => {
-    setSearchTerm(event.target.value);
-    setCurrentPage(1); // Reset to first page when search term changes
-  };
-
-  const filteredStats = () => {
-    // Filter the stats based on the search term
-    return Object.entries(stats).filter(([key, value]) =>
-      key.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  };
-
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredStats().slice(indexOfFirstItem, indexOfLastItem);
-
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
   return (
     <div
       style={{
@@ -51,13 +30,6 @@ const TransactionsStats = ({ selectedMonth }) => {
       }}
     >
       <h2>Transaction Statistics for {selectedMonth}</h2>
-      <input
-        type="text"
-        placeholder="Search..."
-        value={searchTerm}
-        onChange={handleSearchChange}
-        style={{ marginBottom: "10px", padding: "5px" }}
-      />
       <table
         style={{
           width: "100%",
@@ -72,12 +44,18 @@ const TransactionsStats = ({ selectedMonth }) => {
           </tr>
         </thead>
         <tbody>
-          {currentItems.map(([key, value], index) => (
-            <tr key={index}>
-              <td>{key}</td>
-              <td>{value}</td>
-            </tr>
-          ))}
+          <tr>
+            <td style={tableCellStyle}>Total Sale Amount</td>
+            <td style={tableCellStyle}>{stats.totalSaleAmount}</td>
+          </tr>
+          <tr>
+            <td style={tableCellStyle}>Total Sold Items</td>
+            <td style={tableCellStyle}>{stats.totalSoldItems}</td>
+          </tr>
+          <tr>
+            <td style={tableCellStyle}>Total Not Sold Items</td>
+            <td style={tableCellStyle}>{stats.totalNotSoldItems}</td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -86,10 +64,19 @@ const TransactionsStats = ({ selectedMonth }) => {
 
 // Style for table headers
 const tableHeaderStyle = {
-  borderBottom: "1px solid #ddd",
   background: "#f2f2f2",
   padding: "8px",
   textAlign: "left",
+  borderBottom: "1px solid #ddd",
+  borderRight: "1px solid #ddd",
+};
+
+// Style for table cells
+const tableCellStyle = {
+  padding: "8px",
+  textAlign: "left",
+  borderBottom: "1px solid #ddd",
+  borderRight: "1px solid #ddd",
 };
 
 export default TransactionsStats;

@@ -18,10 +18,10 @@ const App = () => {
         selectedMonth={selectedMonth}
         onMonthChange={handleMonthChange}
       />
+      <TransactionsTable selectedMonth={selectedMonth} />
       <TransactionsStats selectedMonth={selectedMonth} />
       <TransactionsBarChart selectedMonth={selectedMonth} />
       <TransactionsPieChart selectedMonth={selectedMonth} />
-      <TransactionsTable selectedMonth={selectedMonth} />
     </div>
   );
 };

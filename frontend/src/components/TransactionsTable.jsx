@@ -6,6 +6,7 @@ const TransactionsTable = ({ selectedMonth }) => {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(10);
+  const [totalPages, setTotalPages] = useState(1); // Track total pages
 
   useEffect(() => {
     const fetchTransactions = async () => {
@@ -16,7 +17,21 @@ const TransactionsTable = ({ selectedMonth }) => {
           page,
           perPage
         );
-        setTransactions(data);
+        console.log("API response:", data);
+
+        // Ensure the data is always an array
+        if (Array.isArray(data)) {
+          setTransactions(data);
+        } else if (data.products && Array.isArray(data.products)) {
+          setTransactions(data.products);
+        } else {
+          setTransactions([]);
+        }
+
+        // Calculate total pages based on total products and perPage
+        const totalProducts =
+          data.totalProducts || (data.products && data.products.length) || 0;
+        setTotalPages(Math.ceil(totalProducts / perPage));
       } catch (error) {
         console.error("Error fetching transactions:", error);
       }
@@ -68,7 +83,7 @@ const TransactionsTable = ({ selectedMonth }) => {
         padding: "20px",
       }}
     >
-      <h2>List Of All Product</h2>
+      <h2>List Of All Products</h2>
       <input
         type="text"
         value={search}
@@ -87,10 +102,10 @@ const TransactionsTable = ({ selectedMonth }) => {
         >
           <thead>
             <tr>
-              <th style={{ tableHeaderStyle }}>Title</th>
-              <th style={{ tableHeaderStyle }}>Description</th>
-              <th style={{ tableHeaderStyle }}>Price</th>
-              <th style={{ tableHeaderStyle }}>Sold</th>
+              <th style={tableHeaderStyle}>Title</th>
+              <th style={tableHeaderStyle}>Description</th>
+              <th style={tableHeaderStyle}>Price</th>
+              <th style={tableHeaderStyle}>Sold</th>
               <th style={tableHeaderStyle}>Image</th>
             </tr>
           </thead>
@@ -102,7 +117,12 @@ const TransactionsTable = ({ selectedMonth }) => {
           Previous
         </button>
         <span style={{ margin: "0 10px" }}>Page {page}</span>
-        <button onClick={() => setPage(page + 1)}>Next</button>
+        <button
+          onClick={() => setPage(page + 1)}
+          disabled={page * perPage >= totalPages}
+        >
+          Next
+        </button>
       </div>
     </div>
   );
