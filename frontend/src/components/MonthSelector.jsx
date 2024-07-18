@@ -1,6 +1,8 @@
 import React from "react";
 
+// MonthSelector component allows users to select a month from a dropdown list
 const MonthSelector = ({ selectedMonth, onMonthChange }) => {
+  // Array of months for the dropdown options
   const months = [
     { value: "January", label: "January" },
     { value: "February", label: "February" },
@@ -16,16 +18,26 @@ const MonthSelector = ({ selectedMonth, onMonthChange }) => {
     { value: "December", label: "December" },
   ];
 
+  // Function to handle month change event
   const handleMonthChange = (event) => {
-    onMonthChange(event.target.value);
+    onMonthChange(event.target.value); // Calls the onMonthChange prop with the selected month value
   };
 
   return (
-    <div style={{ textAlign: "center", marginBottom: "10px" }}>
+    <div
+      style={{
+        textAlign: "center",
+        marginBottom: "10px",
+        backgroundColor: "#f0f0f0",
+      }}
+    >
       <label style={{ marginRight: "10px" }}>Select Month:</label>
+
+      {/* Dropdown select element */}
       <select
-        value={selectedMonth}
-        onChange={handleMonthChange}
+        defaultValue={"March"}
+        value={selectedMonth} // Current selected month value
+        onChange={handleMonthChange} // Event handler for when a month is selected
         style={{
           padding: "5px",
           borderRadius: "5px",
@@ -33,9 +45,10 @@ const MonthSelector = ({ selectedMonth, onMonthChange }) => {
           backgroundColor: "#f9f9f9",
         }}
       >
+        {/* Map through months array to create dropdown options */}
         {months.map((month) => (
           <option key={month.value} value={month.value}>
-            {month.label}
+            {month.label} {/* Display month label */}
           </option>
         ))}
       </select>

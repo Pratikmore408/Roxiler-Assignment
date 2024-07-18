@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { getTransactions } from "../services/transactionService";
+import getTransactions from "../services/transactionService";
 
+// TransactionsTable component displays a table of transactions for a selected month
 const TransactionsTable = ({ selectedMonth }) => {
+  // State to hold transactions data
   const [transactions, setTransactions] = useState([]);
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(10);
   const [totalPages, setTotalPages] = useState(1); // Track total pages
 
+  // Fetch transactions data when selectedMonth, search, page, or perPage changes
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
+        // Fetch transactions data from service
         const data = await getTransactions(
           selectedMonth,
           search,
@@ -38,7 +42,7 @@ const TransactionsTable = ({ selectedMonth }) => {
     };
 
     fetchTransactions();
-  }, [selectedMonth, search, page, perPage]);
+  }, [selectedMonth, search, page, perPage]); // Dependency array ensures effect runs on relevant changes
 
   // Handle search input change
   const handleSearchChange = (event) => {
@@ -73,6 +77,7 @@ const TransactionsTable = ({ selectedMonth }) => {
     ));
   };
 
+  // Render the TransactionsTable component
   return (
     <div
       style={{
@@ -83,7 +88,9 @@ const TransactionsTable = ({ selectedMonth }) => {
         padding: "20px",
       }}
     >
-      <h2>List Of All Products</h2>
+      {/* Title for the table */}
+      <h2>List Of Transactions for {selectedMonth}</h2>
+      {/* Search input */}
       <input
         type="text"
         value={search}
@@ -91,6 +98,7 @@ const TransactionsTable = ({ selectedMonth }) => {
         placeholder="Search Product"
         style={{ marginBottom: "10px", padding: "5px" }}
       />
+      {/* Table container with horizontal scroll */}
       <div style={{ overflowX: "auto", width: "100%" }}>
         <table
           style={{
@@ -112,6 +120,7 @@ const TransactionsTable = ({ selectedMonth }) => {
           <tbody>{renderTransactions()}</tbody>
         </table>
       </div>
+      {/* Pagination controls */}
       <div style={{ marginTop: "10px" }}>
         <button onClick={() => setPage(page - 1)} disabled={page === 1}>
           Previous

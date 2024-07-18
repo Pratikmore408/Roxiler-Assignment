@@ -1,26 +1,32 @@
 import React, { useEffect, useState } from "react";
 import getMonthlyStats from "../services/statsService";
 
+// TransactionsStats component displays statistics for transactions in a selected month
 const TransactionsStats = ({ selectedMonth }) => {
+  // State to hold statistics data
   const [stats, setStats] = useState({
     totalSaleAmount: 0,
     totalSoldItems: 0,
     totalNotSoldItems: 0,
   });
 
+  // Fetch statistics data when selectedMonth changes
   useEffect(() => {
     const fetchStats = async () => {
       try {
+        // Fetch statistics data from service
         const data = await getMonthlyStats(selectedMonth);
-        setStats(data); // Assuming data matches the structure { totalSaleAmount, totalSoldItems, totalNotSoldItems }
+        // Update stats state with fetched data
+        setStats(data);
       } catch (error) {
         console.error("Error fetching statistics:", error);
       }
     };
 
     fetchStats();
-  }, [selectedMonth]);
+  }, [selectedMonth]); // Dependency array ensures effect runs when selectedMonth changes
 
+  // Render the statistics table
   return (
     <div
       style={{
@@ -29,7 +35,9 @@ const TransactionsStats = ({ selectedMonth }) => {
         padding: "20px",
       }}
     >
+      {/* Title for the statistics */}
       <h2>Transaction Statistics for {selectedMonth}</h2>
+      {/* Table to display statistics */}
       <table
         style={{
           width: "100%",
@@ -44,6 +52,7 @@ const TransactionsStats = ({ selectedMonth }) => {
           </tr>
         </thead>
         <tbody>
+          {/* Rows for displaying statistics */}
           <tr>
             <td style={tableCellStyle}>Total Sale Amount</td>
             <td style={tableCellStyle}>{stats.totalSaleAmount}</td>

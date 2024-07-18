@@ -2,6 +2,7 @@ import axios from "axios";
 
 const API_BASE_URL = "http://127.0.0.1:5000/api";
 
+// Function to fetch combined data for a specific month from the API
 const getCombinedData = async (month) => {
   try {
     const params = { month };

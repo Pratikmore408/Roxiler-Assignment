@@ -3,7 +3,8 @@ import axios from "axios";
 
 const API_URL = "http://127.0.0.1:5000/api/transactions";
 
-export const getTransactions = async (month, search, page, perPage = 10) => {
+// Function to fetch transactions based on specified parameters
+const getTransactions = async (month, search, page, perPage = 10) => {
   const response = await axios.get(API_URL, {
     params: {
       month,
@@ -14,3 +15,5 @@ export const getTransactions = async (month, search, page, perPage = 10) => {
   });
   return response.data;
 };
+
+export default getTransactions;
