@@ -63,7 +63,7 @@ This web app visualizes transaction data from an API in table, pie chart, and ba
 ### Clone the Repository
 
 Create a .env file in the root of your project and add your MongoDB Atlas URI and port number:
-MONGO_URI=<your-mongodb-atlas-uri>
+MONGO_URI=<your-mongodb-atlas-uri> (or you can use mine)
 PORT=5000
 
 Install dependancies
